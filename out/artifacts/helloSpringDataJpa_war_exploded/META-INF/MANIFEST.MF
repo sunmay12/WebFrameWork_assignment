@@ -1,0 +1,9 @@
+Manifest-Version: 1.0
+Created-By: IntelliJ IDEA
+Built-By: sunmay
+Build-Jdk: Oracle OpenJDK 21.0.6 - aarch64
+Implementation-Title: helloSpringDataJpa
+Implementation-Version: 0.0.1-SNAPSHOT
+Implementation-Vendor-Id: kr.ac.hansung.cse
+Main-Class: ${start-class}
+

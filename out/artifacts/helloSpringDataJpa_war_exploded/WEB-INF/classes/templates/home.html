@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Product Management System</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+<!-- 네비게이션 바 -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+  <div class="container">
+    <a class="navbar-brand" href="#">Product Management</a>
+    <div class="navbar-nav ms-auto">
+      <div sec:authorize="isAuthenticated()">
+                    <span class="navbar-text me-3">
+                        안녕하세요, <span sec:authentication="name"></span>님!
+                        <span sec:authorize="hasRole('ADMIN')" class="badge bg-warning text-dark ms-1">관리자</span>
+                    </span>
+        <form th:action="@{/logout}" method="POST" class="d-inline">
+          <button type="submit" class="btn btn-outline-light btn-sm">로그아웃</button>
+        </form>
+      </div>
+      <div sec:authorize="!isAuthenticated()">
+        <a th:href="@{/login}" class="btn btn-outline-light btn-sm me-2">로그인</a>
+        <a th:href="@{/register}" class="btn btn-light btn-sm">회원가입</a>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<div class="container mt-5">
+  <div class="row">
+    <div class="col-12">
+      <div class="jumbotron bg-light p-5 rounded">
+        <h1 class="display-4">Product Management System</h1>
+        <p class="lead">Spring Security 기반 상품 관리 시스템입니다.</p>
+
+        <div sec:authorize="!isAuthenticated()">
+          <hr class="my-4">
+          <p>서비스를 이용하려면 로그인이 필요합니다.</p>
+          <a th:href="@{/login}" class="btn btn-primary btn-lg">로그인</a>
+          <a th:href="@{/register}" class="btn btn-success btn-lg">회원가입</a>
+        </div>
+
+        <div sec:authorize="isAuthenticated()">
+          <hr class="my-4">
+          <div class="row">
+            <div class="col-md-6">
+              <div class="card">
+                <div class="card-body">
+                  <h5 class="card-title">상품 관리</h5>
+                  <p class="card-text">상품 목록을 확인하고 관리할 수 있습니다.</p>
+                  <a th:href="@{/products}" class="btn btn-primary">상품 목록</a>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-md-6" sec:authorize="hasRole('ADMIN')">
+              <div class="card">
+                <div class="card-body">
+                  <h5 class="card-title">관리자 페이지</h5>
+                  <p class="card-text">사용자 관리 및 시스템 관리 기능입니다.</p>
+                  <a th:href="@{/admin}" class="btn btn-warning">관리자 페이지</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 기능 소개 -->
+  <div class="row mt-5">
+    <div class="col-md-4">
+      <div class="card">
+        <div class="card-body text-center">
+          <h5 class="card-title">사용자 인증</h5>
+          <p class="card-text">안전한 로그인/회원가입 시스템</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="card">
+        <div class="card-body text-center">
+          <h5 class="card-title">권한 기반 접근</h5>
+          <p class="card-text">역할별 차등화된 기능 제공</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="card">
+        <div class="card-body text-center">
+          <h5 class="card-title">상품 관리</h5>
+          <p class="card-text">효율적인 상품 CRUD 시스템</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
